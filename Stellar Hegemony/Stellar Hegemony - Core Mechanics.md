@@ -1,0 +1,44 @@
+# Stellar Hegemony - Core Mechanics
+
+**Status:** Initial Adaptation from Rumble Nation
+
+## Core Vision
+A space-themed area control game inspired by *Rumble Nation*, but rethemed around interstellar empires, wormhole travel, and strategic territory control.
+
+## Key Adaptations
+
+### Map & Movement
+- **Areas** → Star systems / sectors
+- **Sea connections** → **Wormholes** (faster or special movement routes)
+- Land connections remain as normal hyperspace routes
+
+### Deployment Phase (Core Tension)
+- Players still roll dice to deploy forces into systems
+- Split dice mechanic remains (2-dice sum determines system, single die = quantity)
+- Tactic Cards and Leader Cards provide powerful one-time effects
+
+### Tactic Cards
+- Will be rethemed as **Tactical Operations** or **Special Orders**
+- Effects should stay mechanically close to the original (see [[Rumble Nation - Tactic Cards]])
+
+### Leader / Daimyo Cards
+- Will become **Legendary Commanders** or **Flag Officers**
+- Effects should stay mechanically close to the original (see [[Rumble Nation - Daimyo Leader Cards]])
+
+### War Phase
+- Combat resolution stays largely the same (power comparison + reinforcements)
+- Reinforcement placement becomes "sending fleets through adjacent wormholes/systems"
+
+## Open Questions
+- How should the dice deployment be rethemed? (e.g. "Jump calculations", "Fleet mobilization orders")
+- Should wormholes have special rules (one-way, unstable, etc.)?
+- Will we keep the exact same number of Tactic/Leader cards?
+
+---
+
+**Next Steps**
+- Decide on first systems to prototype
+- Define how wormholes affect movement and Tactic Cards
+- Begin adapting the first 3–4 Tactic Cards
+
+See also: [[Rumble Nation - Rules Overview]], [[Rumble Nation - Tactic Cards]], [[Rumble Nation - Daimyo Leader Cards]]

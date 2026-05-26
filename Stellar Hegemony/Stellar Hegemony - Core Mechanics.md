@@ -5,6 +5,11 @@
 ## Core Vision
 A space-themed area control game inspired by *Rumble Nation*, but rethemed around interstellar empires, wormhole travel, and strategic territory control.
 
+## Important Rule: Zone Values
+At the start of every game, each of the 11 sectors is randomly assigned a point value between **2 and 12**. These values are **not** fixed to any specific sector — they are reassigned every game (similar to the gold tokens in the original game).
+
+**Note:** The numbers 2–12 are only used in the Sector Map Reference for design communication. They do **not** represent permanent zone identities.
+
 ## Key Adaptations
 
 ### Map & Movement

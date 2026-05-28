@@ -1,5 +1,6 @@
 # Stellar Hegemony - Adapted Tactic Cards
 
+**Last Updated:** 2026-05-28
 **Source:** Rumble Nation Tactic Cards (mechanics preserved exactly)
 
 **Important Rule:**

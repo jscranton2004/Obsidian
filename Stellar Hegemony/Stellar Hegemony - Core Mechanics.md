@@ -1,6 +1,7 @@
 # Stellar Hegemony - Core Mechanics
 
 **Status:** Initial Adaptation from Rumble Nation
+**Last Updated:** 2026-05-28
 
 ## Core Vision
 A space-themed area control game inspired by *Rumble Nation*, but rethemed around interstellar empires, wormhole travel, and strategic territory control.

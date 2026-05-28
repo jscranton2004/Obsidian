@@ -1,5 +1,6 @@
 # Stellar Hegemony - Adapted Flag Ship Cards
 
+**Last Updated:** 2026-05-28
 **Source:** Rumble Nation Daimyo Cards (mechanics preserved exactly)
 
 **Important Changes:**

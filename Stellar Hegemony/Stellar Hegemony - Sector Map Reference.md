@@ -1,5 +1,6 @@
 # Stellar Hegemony - Sector Map Reference
 
+**Last Updated:** 2026-05-28
 **Source:** Rumble Nation board layout (11 sectors)
 
 **Notes:**

@@ -5,55 +5,40 @@
 **Purpose:** Define how the actual effects of Tactic Cards and Leader Cards will be implemented.
 
 ## Overview
-Both Tactic Cards and Leader (Flag Ship) Cards provide powerful one-time effects. Each player is limited to using only **one** of each type per game. Effects must integrate cleanly with the existing zone, unit, and deployment systems.
+Tactic Cards and Leader (Flag Ship) Cards provide powerful one-time effects. Each player is limited to using only **one** of each type per game. Effects must integrate cleanly with the existing zone, unit, deployment, and connectivity systems.
 
 ## Core Principles
 
 - Effects are **one-time use** per card (already enforced by `TacticManager` and `LeaderSelection`).
 - Effects must respect the current **unit representation** model (Fleets + Flag Ships as units in zones).
-- Effects must work with the existing definition of **"adjacent"** (hyperspace or wormhole) and the distinction between movement types.
+- Effects must correctly use the **Zone Connectivity System** (standard adjacency vs hyperspace-only vs wormhole-only).
 - Once any player runs out of units, **all** Tactic and Leader card usage is locked out globally.
 
 ## Required Systems Interaction
 
 ### Zones (`zone.gd`)
-- Effects will frequently need to:
-  - Move units between zones
-  - Add/remove units from a zone
-  - Check ownership of units in a zone
-  - Replace enemy units
+Effects will frequently need to:
+- Move units between zones
+- Add/remove units from a zone
+- Check ownership of units in a zone
+- Replace enemy units
 
-### HybridMap
-- Will need helper methods such as:
-  - `get_zones_adjacent_to(zone)`
-  - `get_zones_connected_by_wormhole(zone)`
-  - `get_zones_connected_by_hyperspace(zone)`
-  - `get_player_units_in_zone(player, zone)` (fleets + flagship count)
-
-### Zone Connectivity System (Prerequisite)
-A critical requirement for most card effects is the ability to determine which zones are connected and **how** they are connected.
-
-This system must support:
-- Standard adjacency (hyperspace or wormhole)
-- Hyperspace-only connections
-- Wormhole-only connections
-
-This data should ideally live in `HybridMap` or a dedicated `ZoneConnection` resource so that card effects (and future movement rules) can query it reliably.
-
-**Note:** As of the current state, this connectivity data has not yet been implemented. It will be required before most Tactic and Leader card effects can function.
+### HybridMap + Zone Connectivity System
+Card effects will rely heavily on the new connectivity queries:
+- `get_adjacent_zones(zone_id)` — Standard adjacency (hyperspace OR wormhole)
+- `get_hyperspace_connected_zones(zone_id)` — Hyperspace only
+- `get_wormhole_connected_zones(zone_id)` — Wormhole only
 
 ### Reserves
-- Several cards interact with "reserves".
-- We need a per-player reserves system (currently not implemented).
+Several cards interact with "reserves". A per-player reserves system (integer count) will be required.
 
 ### DeploymentManager
-- Some effects (e.g. Reinforce) are essentially a special form of deployment.
-- Effects should be able to call into deployment logic where appropriate.
+Some effects (e.g. Reinforce, Sky Marshal Quill) are special forms of deployment and should be able to leverage existing deployment logic.
 
 ## Tactic Card Effects Summary
 
 ### Movement Cards
-- **Scout** — Move 1 fleet to an adjacent system.
+- **Scout** — Move 1 fleet to an adjacent system (any route).
 - **Hyperspace Invasion** — Move 2 fleets via hyperspace only.
 - **Wormhole Invasion** — Move 2 fleets via wormhole only.
 - **Sub-Light Squadron** — Move half (rounded down) of fleets from one system to an adjacent system.
@@ -79,29 +64,30 @@ This data should ideally live in `HybridMap` or a dedicated `ZoneConnection` res
 
 ## Recommended Implementation Approach
 
-### Option A (Preferred for clarity)
-Create a `CardEffectExecutor` (or `EffectSystem`) that contains methods such as:
+### CardEffectExecutor
+Create a dedicated `CardEffectExecutor` (or `EffectSystem`) containing methods such as:
 - `execute_tactic(card_id, player, context)`
 - `execute_leader(leader_id, player, context)`
 
-Each effect is implemented as a separate method or small class. The executor receives the current game state (zones, player units, reserves) and modifies it.
+Each effect is implemented as a separate method or small class. The executor receives the current game state and modifies it.
 
-### Option B
-Attach effect methods directly to `TacticManager` and a future `LeaderManager`.
-
-### Context Object
-A `CardExecutionContext` should be passed in containing:
+### CardExecutionContext
+A context object should be passed containing:
 - Current `HybridMap`
 - Player unit data
 - Reserves data
 - Flag Ship locations
+- Access to connectivity queries
+
+### "Can Perform the Action" Check
+Before allowing a player to select a card, the system (or UI) must verify that the player can actually execute the effect. This check is the caller's responsibility but should be supported by helper methods on the executor.
 
 ## Open Questions / Future Considerations
 
-- How are "reserves" represented? (Simple integer count per player is likely sufficient for now.)
+- How are "reserves" represented? (Simple integer count per player is likely sufficient.)
 - How do we handle partial movement when a player has fewer units than the card allows?
-- Should movement effects trigger visual feedback / animations?
-- How do we handle the "must be able to perform the action" check for each card (this is currently the caller's responsibility)?
+- Should movement effects trigger visual feedback or animations?
+- How do we handle the "must be able to perform the action" eligibility check cleanly?
 
 ## References
 - `Stellar Hegemony - Adapted Tactic Cards.md`
@@ -109,6 +95,7 @@ A `CardExecutionContext` should be passed in containing:
 - `Stellar Hegemony - Tactic Card System Planning.md`
 - `Stellar Hegemony - Deployment Phase Planning.md`
 - `Stellar Hegemony - Unit Representation Planning.md`
+- `Stellar Hegemony - Zone Connectivity System Design.md`
 
 ---
 

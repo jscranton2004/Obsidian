@@ -26,9 +26,9 @@ Implement the following methods on `HybridMap`:
 
 | Method                                | Purpose                                                                 | Wormholes allowed? | Hyperspace allowed? |
 |---------------------------------------|-------------------------------------------------------------------------|--------------------|---------------------|
-| `get_adjacent_zones(zone_id)`         | Returns all zones connected by any route                                | Yes                | Yes                 |
-| `get_hyperspace_connected_zones(zone_id)` | Returns only zones connected via hyperspace                         | No                 | Yes                 |
-| `get_wormhole_connected_zones(zone_id)`   | Returns only zones connected via wormhole                           | Yes                | No                  |
+| `get_adjacent_zones(zone_id)`         | Returns **all** zones connected to the given zone by any route          | Yes                | Yes                 |
+| `get_hyperspace_connected_zones(zone_id)` | Returns only zones connected **exclusively** via hyperspace         | No                 | Yes                 |
+| `get_wormhole_connected_zones(zone_id)`   | Returns only zones connected **exclusively** via wormhole           | Yes                | No                  |
 | `get_connection_type(zone_a, zone_b)`     | Returns the type(s) of connection between two zones                 | —                  | —                   |
 
 ### Data Source
@@ -45,10 +45,10 @@ Use the connection data from **`Stellar Hegemony - Sector Map Reference.md`** to
 
 ## Acceptance Criteria
 
-- `get_adjacent_zones(5)` returns all neighbors of The Core (both hyperspace and wormhole).
-- `get_hyperspace_connected_zones(4)` returns only hyperspace connections.
-- `get_wormhole_connected_zones(4)` returns only wormhole connections.
-- `get_connection_type(2, 12)` correctly reports the connection type.
+- `get_adjacent_zones(zone_id)` returns every neighboring zone regardless of connection type.
+- `get_hyperspace_connected_zones(zone_id)` excludes any wormhole-only connections.
+- `get_wormhole_connected_zones(zone_id)` excludes any hyperspace-only connections.
+- `get_connection_type(zone_a, zone_b)` correctly reports the connection type(s).
 - The system works with the existing zone numbering (2–12).
 
 ## Files You Will Likely Touch

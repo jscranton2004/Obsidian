@@ -30,6 +30,18 @@ Both Tactic Cards and Leader (Flag Ship) Cards provide powerful one-time effects
   - `get_zones_connected_by_hyperspace(zone)`
   - `get_player_units_in_zone(player, zone)` (fleets + flagship count)
 
+### Zone Connectivity System (Prerequisite)
+A critical requirement for most card effects is the ability to determine which zones are connected and **how** they are connected.
+
+This system must support:
+- Standard adjacency (hyperspace or wormhole)
+- Hyperspace-only connections
+- Wormhole-only connections
+
+This data should ideally live in `HybridMap` or a dedicated `ZoneConnection` resource so that card effects (and future movement rules) can query it reliably.
+
+**Note:** As of the current state, this connectivity data has not yet been implemented. It will be required before most Tactic and Leader card effects can function.
+
 ### Reserves
 - Several cards interact with "reserves".
 - We need a per-player reserves system (currently not implemented).

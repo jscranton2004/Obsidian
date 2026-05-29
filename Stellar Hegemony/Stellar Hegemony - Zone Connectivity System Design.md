@@ -17,12 +17,20 @@ The system must support three categories of connections:
 3. **Wormhole-only** — Special/faster movement routes (can be one-way in the future).
 
 ### Core Queries Needed
-The system should provide the following queries:
 
-- `get_adjacent_zones(zone)` — Returns all zones connected by any route.
-- `get_hyperspace_connected_zones(zone)` — Returns only hyperspace connections.
-- `get_wormhole_connected_zones(zone)` — Returns only wormhole connections.
-- `get_connection_type(zone_a, zone_b)` — Returns the type(s) of connection between two zones.
+The system should provide the following queries. It is critical that these queries correctly distinguish between movement types:
+
+| Query Method                           | Returns                                                                 | Can use Wormholes? | Can use Hyperspace? |
+|----------------------------------------|-------------------------------------------------------------------------|--------------------|---------------------|
+| `get_adjacent_zones(zone)`             | All zones connected by **any** route (standard "adjacent")              | Yes                | Yes                 |
+| `get_hyperspace_connected_zones(zone)` | Only zones connected **exclusively** via hyperspace lanes               | No                 | Yes                 |
+| `get_wormhole_connected_zones(zone)`   | Only zones connected **exclusively** via wormhole                       | Yes                | No                  |
+| `get_connection_type(zone_a, zone_b)`  | The type(s) of connection between two specific zones                    | —                  | —                   |
+
+**Important Rule:**
+- “Adjacent” = can use **either** hyperspace **or** wormhole connections.
+- Cards/effects that specify “via hyperspace lanes” must **not** be allowed to use wormhole connections.
+- Cards/effects that specify “via wormhole” must **not** be allowed to use hyperspace connections.
 
 ### Data Model Recommendations
 

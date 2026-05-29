@@ -1,64 +1,63 @@
-# Prompt for Grok Build: Reserves System
+# Prompt for Grok Build: Reserves System (Corrected Model)
 
 **Project:** Stellar Hegemony  
 **Repo location:** `C:\Git\stellar-hegemony\game`  
 **Documentation:** `C:\Obsidian Vault\Stellar-Hegemony\Stellar Hegemony\`
 
 ## Goal
-Implement the Reserves system so that players have a secondary pool of units that can be moved to and from the board via Tactic Cards.
+Implement the Reserves system using the correct model: each player has a **single pool of 18 fleets total**. Reserves represent the **undeployed portion** of that pool.
 
 ## Key Reference Documents
-- `Stellar Hegemony - Reserves System Design.md`
+- `Stellar Hegemony - Reserves System Design.md` (revised)
 - `Stellar Hegemony - Adapted Tactic Cards.md`
 - `Stellar Hegemony - PlayerState - Implementation Notes.md`
 
+## Problem with Previous Implementation
+The prior version treated reserves as a separate pool. This is incorrect. Reserves should simply be the fleets that have **not yet been placed** on the board (starting at 18).
+
 ## Requirements
 
-### Scope (Narrow)
-Add reserves tracking and support the three cards that directly reference reserves. Do **not** implement full card UI or War phase.
+### Core Model (Single Pool)
+- Each player has **18 fleets total**.
+- `reserves` = `18 - fleets_currently_on_board`.
+- When a player deploys, they move fleets **from reserves to the board**.
+- When a player uses **Emergency Withdrawal**, fleets move **from the board back to reserves**.
+- Exhaustion only occurs when the **entire 18-unit pool** is gone (board + reserves = 0).
 
-### Core Behavior
-- Every player has a `reserves` count (separate from their main fleet pool).
-- Provide methods to:
-  - Add units to reserves (from the board)
-  - Deploy units from reserves (to the board)
-- Reserves do **not** affect exhaustion state.
+### Required Changes
+- Update `PlayerState` to track total fleets (18) and currently deployed fleets.
+- Provide clean methods:
+  - `deploy_from_reserves(player_id, amount)`
+  - `return_to_reserves(player_id, amount)`
+  - `get_reserves(player_id)` (calculated or stored)
+- Update `CardEffectExecutor` to support the three relevant cards using this model:
+  - **Reinforce**
+  - **Insurrection**
+  - **Emergency Withdrawal**
 
-### Card Support
-Support the following effects (via `CardEffectExecutor` or direct methods):
-- **Reinforce**: Move 1 unit from reserves → board (into a system the player already occupies)
-- **Insurrection**: Move 1 enemy fleet to its reserves, then move 1 of your units from reserves to that system
-- **Emergency Withdrawal**: Move up to 2 of your fleets from the board back to reserves
-
-### Integration
-- Store `reserves` in `PlayerState`
-- Update `CardEffectExecutor` to handle reserves-related effects
-- Ensure `PlayerState` methods are used so the data stays consistent
-
-### Query / Mutation API (minimum)
-- `add_to_reserves(player_id, amount)`
-- `deploy_from_reserves(player_id, amount)`
-- `get_reserves(player_id)`
-- `can_deploy_from_reserves(player_id, amount)`
+### Scope
+- Keep changes minimal.
+- Do **not** add custom game setup or variable starting values.
+- Do **not** implement full War phase logic.
 
 ## Acceptance Criteria
-- Players can move units to and from reserves.
-- The three relevant tactic effects are supported.
-- Reserves are tracked separately from the main token pool (and do not affect exhaustion).
-- The system is ready for future card execution wiring.
+- Players start with 18 fleets in reserves.
+- Deploying reduces reserves.
+- Returning units to reserves increases reserves.
+- Exhaustion is only triggered when total fleets reach zero.
+- The three tactic cards that reference reserves function correctly.
 
 ## Files You Will Likely Touch
 - `game/scripts/systems/player_state.gd`
 - `game/scripts/systems/card_effect_executor.gd`
-- Possibly a small `reserves_manager.gd` if it keeps things cleaner
 
 ## Important Notes
+- This is a corrective implementation of the proper single-pool reserves model.
 - Keep the implementation focused and minimal.
-- Build on top of the existing `PlayerState` and `CardEffectExecutor`.
 
 Please implement this cleanly with good comments. After completion, briefly describe:
-- What was created
-- How reserves are tracked and used by cards
-- Any assumptions made
+- How the single 18-unit pool model is implemented
+- How reserves are calculated/tracked
+- Confirmation that the three relevant cards are supported
 
 This is a narrow-scope task.

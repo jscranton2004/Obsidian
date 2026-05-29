@@ -75,4 +75,4 @@ Please implement this cleanly with good comments. After completion, briefly desc
 - How to test the logic
 - Any assumptions made
 
-This is a narrow-scope task focused only on the selection logic and turn order.
+**Important:** This is a narrow-scope task focused **only** on the selection logic and turn order. Do **not** implement the actual leader card effects or rules text at this stage.

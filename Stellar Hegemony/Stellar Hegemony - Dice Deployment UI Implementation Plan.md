@@ -1,6 +1,6 @@
 # Stellar Hegemony - Dice Deployment UI Implementation Plan
 
-**Status:** Ready for implementation  
+**Status:** ✅ Implemented (narrow scope complete) — 2026-05-29 by Grok Build + team review  
 **Created:** 2026-05-29  
 **Scope:** Narrow — Dice roll → visual display → player selection of 2 dice for sector targeting (sum)  
 **Goal:** Implement interactive dice rolling and selection sequence in Godot 4 UI. The third die is reserved for future unit count.

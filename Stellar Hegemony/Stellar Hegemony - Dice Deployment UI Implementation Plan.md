@@ -125,3 +125,58 @@ After implementation:
 - Zone highlighting based on sum
 
 **Next:** Once this is done and reviewed, we can move to zone targeting integration.
+
+---
+
+## Delivered Implementation (Grok Build — 2026-05-29)
+
+### New Reusable Components
+- `scenes/ui/DiceDisplay.tscn` + `scripts/ui/dice_display.gd`
+  - Shows real `Dice_1.png` … `Dice_6.png` assets
+  - Clickable with distinct visual states:
+    - Warm gold border + "UNITS" badge (for the chosen units die)
+    - Cool cyan border + "SECTOR" badge (for the two sector dice)
+
+### Main Controller
+- `scenes/ui/DeploymentDiceUI.tscn` + `scripts/ui/deployment_dice_ui.gd`
+  - "Roll 3 Dice" button
+  - Three dice displayed with actual images
+  - **Selection model**: Click any die to designate it as the **Units Die** — the other two automatically become the Sector Pair (unambiguous, always valid)
+  - Large live-updating **"Sector Sum: XX"** label
+  - **"Units Die: X"** indicator
+  - Clear instruction text
+  - "Confirm Selection" button (enabled only after choice)
+  - Emits `dice_selection_confirmed(sector_sum, unit_value)` signal (ready for future HybridMap wiring)
+
+### Integration
+- Updated `scenes/levels/Main.tscn` — replaced placeholder `DeploymentTestUI` with the new `DeploymentDiceUI`
+- UI is fully isolated from zone targeting / unit placement (per requirements)
+
+## Testing Protocol (Official)
+
+**How to test the dice sequence:**
+
+1. Open `scenes/levels/Main.tscn` in Godot 4.6.3+
+2. Run the scene (`F5`)
+3. Click **"Roll 3 Dice"** → verify three actual dice face images appear from the `icons-dice` folder
+4. Click any one of the three dice:
+   - Chosen die gets warm gold "UNITS" treatment
+   - Other two get cool cyan "SECTOR" treatment
+   - Large **Sector Sum** label updates instantly with the correct total
+   - **Units Die** indicator shows the remaining value
+5. Re-roll or change selection freely — UI should stay responsive
+6. "Confirm Selection" enables only after a choice and emits the signal (currently prints to console for verification)
+
+**Acceptance Criteria**
+- Uses only existing dice assets with correct import settings (Nearest filter)
+- Selection is unambiguous and always produces exactly one Units die + two Sector dice
+- Sum calculation is accurate
+- No side effects on map or reserves (narrow scope respected)
+- Code follows team conventions (snake_case scripts, PascalCase scenes, signals, comments)
+
+**Next Integration Point**
+Listen for `dice_selection_confirmed(sector_sum, unit_value)` when wiring to the HybridMap zone targeting system.
+
+---
+
+*Documented per team preference for clean long-term records. All future testing protocols should live here or in a dedicated Testing/ folder.*

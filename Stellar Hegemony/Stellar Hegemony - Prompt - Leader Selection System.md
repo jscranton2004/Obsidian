@@ -9,14 +9,16 @@ Implement the Leader selection system that runs at the start of every game.
 
 ## Key Rules (from Core Mechanics + team requirements)
 
-- There are exactly **6 possible leaders**:
-  - Ants
-  - Humans
-  - Rocks
-  - Birds
-  - Blobs
-  - Fishs
+There are exactly **6 possible leaders** with the following full names and titles:
 
+- **Commander Skitter** (Ant-men) – *The Swarm Lord*
+- **Admiral Vance "Ironjaw" Hale** (Human) – *The Last Terran*
+- **High Lord Glubthar** (Fish-men) – *Voice of the Abyssal Current*
+- **Sky Marshal Quill** (Bird-men) – *The Stormfeather*
+- **Lord Granite** (Rock-men) – *The Unmoving*
+- **The Many** (Weird Blobs) – *The Thousand-Minded*
+
+### Selection Rules
 - At the start of a game, the number of leaders presented = **number of players + 1**
 - Maximum 4 players → therefore **one leader is always randomly excluded**
 - The player who goes **last** picks their leader **first**
@@ -42,7 +44,7 @@ Create a **Leader Selection System** that handles:
 
 ## Strict Requirements
 
-- Use the exact 6 leader names listed above.
+- Use the exact 6 leaders with their full names and titles listed above.
 - The system must be easily callable at game start (suggest a `start_new_game(players: int)` style method).
 - Keep scope narrow — do **not** implement the actual leader card effects, UI for picking, or player data models yet.
 - Focus on the **logic** of:
@@ -65,8 +67,8 @@ Create a **Leader Selection System** that handles:
 
 ## Documentation References
 - Core Mechanics: `Stellar Hegemony - Core Mechanics.md`
-- Leader names and assets: Memory note "Current leaders: Ants, Humans, Rocks, Birds, Blobs, Fishs"
-- Sector Map Reference also exists for context on game structure
+- Full leader names & titles: `Stellar Hegemony - Adapted Flag Ship Cards.md`
+- Asset folder: `game/assets/sprites/cards/leaders/`
 
 Please implement this cleanly with good comments. After completion, briefly describe:
 - What was created

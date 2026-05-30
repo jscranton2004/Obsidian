@@ -1,20 +1,15 @@
 # Stellar Hegemony - Phase 3 Task 2 Completion
 
 **Completed:** 2026-05-30  
-**Task:** Simple Zone Control / Ownership Updates
+**Task:** War Phase Resolution Planning (Corrected)
 
 ## Summary
-Basic zone ownership transfer on movement has been implemented.
+This note was corrected. The previous version incorrectly described combat and ownership changes happening on movement.
 
-## What Was Delivered
-- Updated `move_fleets()` in `hybrid_map.gd` to handle ownership changes
-- Clear comments explaining the logic
-
-## Key Behavior
-- Moving into a neutral zone claims it
-- Moving into an enemy-controlled zone transfers ownership
-- Moving into your own zone has no effect
-- Visuals update automatically via existing `Zone` methods
+## Correct Understanding
+- Movement is pure relocation only.
+- Combat and ownership resolution happen in a separate **War Phase** after all players have finished deploying.
+- War Phase uses "most units wins" with exhaustion order as the tiebreaker.
 
 ## Status
-Task complete. Ownership now responds to movement.
+Task 2 planning has been updated to reflect the correct game rules.

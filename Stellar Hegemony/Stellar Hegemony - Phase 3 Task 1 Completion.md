@@ -15,10 +15,10 @@ Basic fleet movement has been successfully implemented by extending `hybrid_map.
 - Reuses existing connectivity queries
 - Supports `"adjacent"`, `"hyperspace"`, and `"wormhole"` movement types
 - Single-hop movement only
-- Clean delegation to `Zone` methods
+- Movement is **pure relocation** — no combat or ownership change occurs on move
+
+## Important Note
+This task was corrected to ensure movement does **not** trigger combat or ownership transfer. Those mechanics belong in the War Phase (see Core Mechanics).
 
 ## Status
-Task complete and ready for use by future UI or systems.
-
----
-*Next task: Simple zone control / ownership updates.*
+Task complete. Movement is now correctly implemented as pure relocation.

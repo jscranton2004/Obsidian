@@ -1,73 +1,64 @@
 # Stellar Hegemony - Leader Selection System - Implementation Notes
 
-**Implemented:** 2026-05-29 by Grok Build  
-**Status:** Complete (narrow scope)
+**Status:** Complete  
+**Date:** 2026-05-29  
+**Related Design:** `Stellar Hegemony - Leader Selection System Design.md`
 
-## What Was Delivered
+## What Was Built
 
-### Primary File
-- `game/scripts/systems/leader_selection.gd`
-  - New `systems/` folder created
-  - `LeaderSelection` class (extends `RefCounted`)
-  - Full implementation of the requested logic
+The Leader Selection System was already present in the codebase and matches the specification exactly.
+
+### Files
+- `game/scripts/systems/leader_selection.gd` — Core `LeaderSelection` class
+- `game/scripts/systems/leader_selection_test.gd` — Headless `SceneTree` test suite
 
 ### Key Features Implemented
-- Exact 6 leaders with full names + titles (from Adapted Flag Ship Cards)
-- `start_new_game(players: int)` — main entry point
-- Randomly offers exactly `(players + 1)` leaders (always excludes 1 when 4 players)
-- Generates random turn order
-- Computes **reverse picking order** so the last player picks first
-- `pick_leader(player_index, leader_id)` enforces correct picking sequence
-- Rich getter API:
+
+- **Exact 6 leaders** with the canonical names and titles from the design docs.
+- `start_new_game(num_players: int)` — main entry point.
+- Correct pool size logic (`num_players + 1`, with 1 always excluded at 4 players).
+- Random turn order + reverse picking order (last player in normal order picks first).
+- `pick_leader(player_index, leader_id)` with full enforcement.
+- Rich query API:
   - `get_offered_leaders()`
   - `get_turn_order()`
   - `get_picking_order()`
   - `get_available_leaders()`
   - `get_next_player_to_pick()`
-  - `is_selection_complete()`
   - `get_leader_for_player()`
-- `auto_assign_for_testing()` helper
-- Extensive comments referencing Core Mechanics
+  - `is_selection_complete()`
+  - `get_state_summary()`
+- `auto_assign_for_testing()` helper for full end-to-end simulation without UI.
 
-### Supporting File
-- `game/scripts/systems/leader_selection_test.gd` — headless test runner (can be kept or deleted)
-
-### What Was Not Touched (per instructions)
-- No changes to `hybrid_map.gd`
-- No UI
-- No Player/Faction data model
-- No leader card effects
+### Polish Applied
+- Fixed `%` array formatting in test output to satisfy the project’s strict “treat warnings as errors” rule.
+- All tests pass cleanly under `godot --headless`.
 
 ## How to Test
 
-**Recommended (headless verification):**
 ```bash
-godot --headless --path "C:\Git\stellar-hegemony\game" -s "res://scripts/systems/leader_selection_test.gd"
+godot --headless --path . -s "res://scripts/systems/leader_selection_test.gd"
 ```
 
-This runs multiple simulations for 2/3/4 players and verifies all acceptance criteria.
+Expected behaviour:
+- Correct number of leaders offered for 2/3/4 players.
+- Reverse picking order is always respected.
+- All leaders in a pool are unique.
+- Multiple runs produce different results.
+- All internal assertions pass.
 
-**Manual usage example:**
-```gdscript
-var draft := preload("res://scripts/systems/leader_selection.gd").new()
-draft.start_new_game(3)
+## Assumptions Made
 
-print(draft.get_offered_leaders())      # 4 leaders
-print(draft.get_picking_order())        # e.g. [2, 0, 1] — player 2 picks first
-```
+- Player identity uses simple integer indices (0-based) for narrow-scope purity.
+- Turn order is fully random every game.
+- The 6 leaders are the canonical list from `Adapted Flag Ship Cards.md`.
+- No integration with `PlayerState`, `TurnManager`, or leader abilities yet (per narrow-scope instruction).
+- The `auto_assign_for_testing()` helper is the intended way to exercise full flow without UI.
 
-## Assumptions Made (kept narrow)
-- Players represented as simple integers (0..n-1)
-- Turn order is always freshly randomised
-- Class is instantiated on demand (`new()`) rather than as an autoload
-- No persistence or asset wiring
+## Next Integration
 
-## Next Natural Steps (not yet implemented)
-- Leader selection UI (draft screen)
-- Lightweight `GameManager` autoload that owns this + the zone value system
-- Wiring chosen leaders to actual player/faction instances
-- Tactic cards
+This system is ready to be wired into a future `GameManager` or setup flow once the broader game-start sequence is built.
 
 ---
 
-*Documented for team reference and future integration work.*
+*Implementation was already complete and fully compliant. Documentation added for traceability.*

@@ -21,7 +21,7 @@
 | # | Gap | Description | Related Documents |
 |---|-----|-------------|-------------------|
 | 1 | **One Action Per Turn Enforcement** | Players must choose either "Deploy units" or "Use one Tactic/Leader ability" per turn. Currently not enforced. | Turn Structure Design |
-| 2 | **Tactic Card Integration** | Tactic cards must be usable once per game and locked out after exhaustion. Not wired into the turn system. | Turn Structure Design, Deployment Phase Planning |
+| 2 | **Tactic Card Integration** | ~~Tactic cards must be usable once per game and locked out after exhaustion. Not wired into the turn system.~~ **COMPLETED** 2026-05-30 | Turn Structure Design, Deployment Phase Planning |
 | 3 | **Leader Ability Integration** | Leader abilities must respect exhaustion lockout and one-use-per-game rules. Currently disconnected. | Deployment Phase Planning, Core Mechanics |
 | 4 | **Deployment Phase Structure** | The game needs a proper Deployment Phase loop with turn order, action choice, and phase end detection. | Deployment Phase Planning |
 | 5 | **War Phase Trigger** | The game must automatically detect when all players have exhausted and trigger the War Phase. Currently manual. | Core Mechanics, Exhaustion Order Design |

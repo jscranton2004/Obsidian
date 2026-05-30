@@ -28,3 +28,8 @@ It supports both regular grids and irregular/unique territory shapes.
 ## Related Notes
 - [[Stellar Hegemony - Sector Map Reference]]
 - [[Stellar Hegemony - Core Mechanics]]
+
+## Reference Image
+![Stellar Hegemony Map Reference](assets/maps/Stellar-Hegemony-Map-Reference.jpeg)
+
+**Note:** This image is the canonical reference for zone placement and connection layout (hyperspace = solid cyan, wormholes = dashed magenta).

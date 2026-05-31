@@ -1,0 +1,33 @@
+# Prompt for Grok Build: Exact Deployment Rules (Phase 6 Task 10)
+
+**Project:** Stellar Hegemony  
+**Repo location:** `C:\Git\stellar-hegemony\game`  
+**Documentation:** Obsidian vault under Stellar Hegemony/
+
+## Goal
+Implement the remaining exact deployment rules so that deployment follows the original Rumble Nation mechanics precisely.
+
+## Scope (Narrow)
+- Add validation and logic for the specific edge cases:
+  - Choosing which die determines quantity
+  - Flag Ship placement restrictions
+  - "Place exact amount or as many as remain"
+  - Low-token scenarios
+- Do **not** implement new UI or broad refactoring — only the rule enforcement logic.
+
+## Key References
+- [[Stellar Hegemony - Rules Fidelity Gap List]]
+- [[Stellar Hegemony - Handoff Note - 2026-05-30]]
+- Deployment Phase Planning and Core Mechanics notes
+
+## Requirements
+- Strict adherence to the listed edge case rules.
+- Clean, minimal changes with good comments.
+- No changes to existing action gating or phase structure.
+
+## Acceptance Criteria
+- All listed deployment edge cases are correctly enforced.
+- No regression on existing deployment flow.
+- Well-commented code.
+
+Please implement this cleanly. After completion, briefly describe what was created, how to test, and any assumptions.

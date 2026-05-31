@@ -25,7 +25,7 @@
 || 3 | **Leader Ability Integration** | ~~Leader abilities must respect exhaustion lockout and one-use-per-game rules. Currently disconnected.~~ **COMPLETED** 2026-05-31 | Deployment Phase Planning, Core Mechanics |
 | 4 | **Deployment Phase Structure** | ~~The game needs a proper Deployment Phase loop with turn order, action choice, and phase end detection.~~ **COMPLETED** 2026-05-31 | Deployment Phase Planning |
 | 5 | **War Phase Trigger** | The game must automatically detect when all players have exhausted and trigger the War Phase. Currently manual. | Core Mechanics, Exhaustion Order Design |
-| 6 | **Global Ability Lockout** | Once any player exhausts, all players lose access to Tactic and Leader abilities. Not implemented. | Deployment Phase Planning |
+| 6 | **Global Ability Lockout** | ~~Once any player exhausts, all players lose access to Tactic and Leader abilities. Not implemented.~~ **COMPLETED** 2026-05-31 | Deployment Phase Planning |
 | 7 | **Exact Deployment Rules** | Several edge cases are missing:<br>• Choosing which die determines quantity<br>• Flag Ship placement restrictions<br>• "Place exact amount or as many as remain"<br>• Low-token scenarios | Deployment Phase Planning |
 
 ---

@@ -22,7 +22,7 @@ All of the following were completed in sequence with strict narrow-scope discipl
 
 ### High Priority Gaps Remaining
 1. **One Action Per Turn Enforcement** — Final verification that the rule is fully respected across all paths (some tests still list it as open).
-2. **War Phase Full Game Loop Integration** — Wiring the War Phase into the main game flow (currently the resolution + application + visuals exist but are not yet called from the top-level game loop).
+2. **War Phase Full Game Loop Integration** — ~~Wiring the War Phase into the main game flow~~ **COMPLETED 2026-05-31** (Task 11).
 3. **Deployment Phase End Condition Polish** — Ensuring the phase properly ends and transitions even in edge cases.
 
 ### Key Design Decisions (still active)

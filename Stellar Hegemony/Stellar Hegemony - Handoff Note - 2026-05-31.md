@@ -1,57 +1,47 @@
 # Stellar Hegemony - Handoff Note (2026-05-31)
 
-**Purpose:** This note captures the current state of the project so work can be resumed cleanly after a break or context reset.
+**Session Summary:** Phase 8 completed successfully.
+
+## Current State
+- **Phase 8 (Main Menu & Scene Flow)** is now fully complete.
+- All six tasks delivered:
+  - SceneManager with GameState system and transition data
+  - Main Menu
+  - Game Setup Screen (leader + AI count selection)
+  - In-Game HUD + full game loop wiring (Deployment/War phases)
+  - Settings Menu with persistence
+  - Polish & Transitions (fade effects + LoadingScreen)
+
+- The game now has a complete, playable single-player experience from Main Menu all the way through to an active game with AI opponents.
+- All tests (headless) continue to pass cleanly.
+- Vault documentation is fully up to date.
+
+## Key Files / Systems Now in Place
+- `SceneManager` autoload (central scene control)
+- `GameSession` + single-player session creation (supports 1 human + up to 3 AI)
+- Full menu flow with fade transitions
+- Basic HUD + End Turn functionality
+- Persistent settings
+
+## Recommended Next Steps
+When returning, the logical next move is to begin **Phase 9 planning**.
+
+Possible Phase 9 themes (to be confirmed):
+- Deeper UI / Deployment phase visuals
+- Leader ability implementation (still high-priority gap)
+- Multiplayer foundations
+- Art & visual polish direction
+
+## Vault Status
+- All Phase 8 planning notes, completion notes, and the Phase 8 Summary have been created and committed.
+- Rules Fidelity Gap List should be reviewed/updated if needed.
+- Obsidian vault is clean and pushed.
+
+## Notes for Next Session
+- Start by reviewing the Phase 8 Summary.
+- Decide on Phase 9 scope and task breakdown.
+- Continue the narrow-scope, well-documented workflow.
 
 ---
 
-## Current Project Status
-
-### Recently Completed (Phase 6)
-All of the following were completed in sequence with strict narrow-scope discipline and full mechanical fidelity:
-
-- **Task 1:** One Action Per Turn Enforcement
-- **Task 2:** Tactic Card Integration
-- **Task 3:** Leader Ability Integration
-- **Task 4:** Deployment Phase Structure (`DeploymentPhaseManager`)
-- **Task 5:** War Phase Trigger
-- **Task 6:** Global Ability Lockout
-- **Task 7:** War Phase Resolution (pure winner calculation + exhaustion tiebreaker)
-- **Task 8:** War Phase Ownership Application
-- **Task 9:** War Phase Visual Feedback (reuses Phase 4 system)
-- **Task 10:** Exact Deployment Rules (all 4 edge cases)
-
-### High Priority Gaps Remaining
-1. **One Action Per Turn Enforcement** — Final verification that the rule is fully respected across all paths (some tests still list it as open).
-2. **War Phase Full Game Loop Integration** — ~~Wiring the War Phase into the main game flow~~ **COMPLETED 2026-05-31** (Task 11).
-3. **Deployment Phase End Condition Polish** — Ensuring the phase properly ends and transitions even in edge cases.
-
-### Key Design Decisions (still active)
-- Strict mechanical fidelity to original Rumble Nation rules
-- One action per turn (Deploy OR Use Tactic/Leader ability)
-- Tactic/Leader abilities locked out after any player exhausts
-- 1950s retro space / Jetson-style art direction
-- Clean separation between resolution and application steps in War Phase
-
----
-
-## Recommended Next Task
-
-**Phase 6 Task 11: War Phase Full Game Loop Integration**
-
-Wire the existing War Phase components (`resolve_war_phase()` + `apply_war_phase_results()` + visual feedback) into the main game loop so that after Deployment Phase ends, the War Phase automatically runs and updates the map state.
-
-This is the natural next narrow step to make the full Deployment → War Phase cycle playable.
-
----
-
-## Vault & Repo Notes
-
-- All recent changes have been committed and pushed.
-- The Obsidian vault is the single source of truth for planning and design.
-- Always run the standard Git sync workflow after editing notes.
-
----
-
-**When you return:** Start by reading this note + the latest [[Stellar Hegemony - Rules Fidelity Gap List]].
-
-Safe travels, Morgal. The project will be waiting right here. 🚀
+**Ready to pick up cleanly next time.**

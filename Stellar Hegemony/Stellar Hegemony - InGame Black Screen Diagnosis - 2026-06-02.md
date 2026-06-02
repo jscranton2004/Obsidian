@@ -59,6 +59,38 @@ After pulling the latest state of the repo, a thorough review of `InGame.tscn`, 
 - [[Stellar Hegemony - Handoff Note - 2026-06-02]]
 - [[Stellar Hegemony - Phase 9 Task 1 - InGame Scene & HybridMap Integration]]
 
+## Fix Attempts Log (Chronological)
+
+This section records every major fix attempted in order, along with the result.
+
+### Attempt 1: Root Node Change (`Node3D` → `Node`)
+- Changed root of `InGame.tscn` from `Node3D` to `Node`
+- Updated `in_game.gd` from `extends Node3D` to `extends Node`
+- **Result:** Crash fixed. Still completely black screen.
+
+### Attempt 2: OrbitCamera Activation Strengthening
+- Added `current = true` as a property in `OrbitCamera.tscn`
+- Added `_enter_tree()` with `make_current()`
+- Added `make_current()` + `call_deferred("make_current")` in `_ready()`
+- **Result:** Camera is now reliably active. Still black screen.
+
+### Attempt 3: WorldEnvironment + Environment Improvement
+- Added `WorldEnvironment` node at `InGame` root level
+- Changed `background_color` to a slightly brighter deep space color
+- Increased `ambient_light_energy` from 0.38 → 0.55
+- **Result:** Environment values improved. Still black screen.
+
+### Attempt 4: CanvasLayer + HUDPanel Visibility
+- Set `CanvasLayer.layer = 1`
+- Added `anchor_bottom = 1.0`, `grow_vertical = 2`, and adjusted `offset_bottom`
+- **Result:** HUD structure is now correct. Still black screen (both 3D and 2D).
+
+### Attempt 5: Environment Value Tweaks (Follow-up)
+- Further minor adjustments to the `Environment` resource in `InGame.tscn`
+- **Result:** No visible change. Still black screen.
+
+**Current Status:** All major structural and camera/environment fixes have been attempted. The problem is now isolated to the actual rendering of the `NebulaBasePlane` and/or its material.
+
 ---
 
 *This note was created after a full `git pull` and manually updated as fixes were validated. Last updated: 2026-06-02.*

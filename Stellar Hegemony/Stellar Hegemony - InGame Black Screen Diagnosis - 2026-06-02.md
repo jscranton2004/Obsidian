@@ -1,90 +1,51 @@
 # Stellar Hegemony - InGame Black Screen Diagnosis (2026-06-02)
 
-**Author:** Ron Weasley (Senior Analysis)  
-**Status:** Detailed Technical Assessment  
-**Related:** [[Stellar Hegemony - Handoff Note - 2026-06-02]], [[Stellar Hegemony - Phase 9 Task 1 - InGame Scene & HybridMap Integration]]
+**Status:** Senior-level analysis after full repo pull  
+**Author:** Ron (Hermes) — acting as senior game developer
 
-## Executive Summary
+## Summary
+After pulling the latest state of the repo, a thorough review of `InGame.tscn`, `in_game.gd`, `orbit_camera.gd`, `HybridMap.tscn`, and related files reveals several structural issues that are very likely causing the persistent black screen (both 3D and 2D).
 
-After pulling the latest repository state and performing a thorough review of the project, the root cause of the persistent black screen (no 3D map and no visible HUD) when entering `InGame.tscn` has been identified. The issue is **architectural** rather than a simple camera positioning problem.
+## Key Findings
 
-The combination of using `Node3D` as the root of `InGame.tscn` while also hosting a `CanvasLayer` + `Control`-based HUD is causing both the 3D rendering and 2D UI to fail to display.
+### 1. Root Node Type is `Node3D` (Highest Probability Cause)
+- `scenes/levels/InGame.tscn` has `Node3D` as its root.
+- This is problematic when the scene also contains a `CanvasLayer` + `Control`-based HUD.
+- Common issues with `Node3D` roots + `CanvasLayer`:
+  - UI not rendering or appearing off-screen
+  - Viewport scaling problems
+  - `CanvasLayer` behavior becoming unreliable
 
-## Detailed Findings
-
-### 1. Critical Issue: Root Node Type (`Node3D`)
-
-**Location:** `scenes/levels/InGame.tscn`
-
-```tscn
-[node name="InGame" type="Node3D"]
-script = ExtResource("1_in_game")
-```
-
-**Analysis:**
-- Using `Node3D` as the root for a scene that contains both 3D content **and** a full `CanvasLayer` HUD is highly problematic in Godot 4.
-- This setup frequently causes `CanvasLayer` to behave unpredictably.
-- Viewport scaling, stretch mode, and UI anchoring become unreliable when the root is not a `Control` or `Node`.
-- This is the most likely single cause of **both** the black 3D view and missing HUD elements.
-
-**Recommendation:** Change root to `Node` (or `Control` if heavy UI work is expected).
-
-### 2. Weak HUD Anchoring & Sizing
-
-**Location:** `scenes/levels/InGame.tscn` (HUDPanel)
-
-```tscn
-[node name="HUDPanel" type="Panel" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -320.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 220.0
-```
-
-**Analysis:**
-- The panel uses fixed pixel offsets instead of proper `Full Rect` or percentage-based anchoring.
-- With a `Node3D` root, the Control may have zero effective size or be positioned off-screen.
-- This explains why the HUD labels and button are completely invisible despite existing in the scene tree.
+### 2. HUDPanel Has Weak Anchoring
+- `HUDPanel` uses `anchors_preset = 1` with fixed pixel offsets (`offset_left = -320`, `offset_right = -20`).
+- This creates a fixed-size panel rather than a properly responsive one.
+- Combined with the `Node3D` root, this is very likely why no UI elements are visible.
 
 ### 3. WorldEnvironment Placement
+- `WorldEnvironment` only exists inside the instanced `HybridMap.tscn`.
+- No environment is defined at the `InGame` scene root level.
+- This can result in a completely black 3D view even when geometry exists.
 
-**Location:** `scenes/Map/HybridMap.tscn`
+### 4. Camera & System Initialization
+- `orbit_camera.gd` correctly sets `current = true` and calls `_setup_initial_view()`.
+- `in_game.gd` initializes all managers after the camera’s `_ready()`.
+- No obvious logic errors found in camera or manager setup.
 
-The `WorldEnvironment` node only exists inside the instanced `HybridMap` scene. When the root of `InGame.tscn` is `Node3D`, the environment may not apply correctly to the viewport.
+### 5. Other Areas Checked
+- Zone creation is working (confirmed in logs).
+- Node paths in `in_game.gd` match the scene structure.
+- `CanvasLayer` layer is at default (0).
 
-This contributes to the completely black 3D rendering even when geometry (NebulaBasePlane + zones) is confirmed to exist via logs.
+## Recommended Next Steps (Narrow Scope)
+1. Change `InGame.tscn` root from `Node3D` to `Node`.
+2. Improve `HUDPanel` anchoring (use `Full Rect` or proper anchors).
+3. Add or promote a `WorldEnvironment` to the `InGame` scene level.
+4. Verify camera remains active after these structural changes.
 
-### 4. Camera & Environment Interaction
-
-While the recent OrbitCamera fixes (`initial_distance = 50`, sign correction on pitch, `set_target` forcing `_reset_view`) are technically correct, they are fighting against the broken scene architecture. The camera may be active and positioned correctly, but the viewport/environment setup prevents it from rendering.
-
-### 5. Other Areas Reviewed
-
-| Component                  | Status     | Notes |
-|---------------------------|------------|-------|
-| `in_game.gd`              | Clean      | Logic and node paths are correct |
-| `orbit_camera.gd`         | Good       | `_ready` + `current = true` + `_setup_initial_view` implemented |
-| Zone creation             | Working    | Logs confirm 11 zones with correct values |
-| `HybridMap` instantiation | Correct    | Properly added as child |
-| `CanvasLayer` layer       | Default (0)| May need explicit layer value |
-
-## Recommended Next Steps (Prioritized)
-
-1. **Change `InGame.tscn` root from `Node3D` to `Node`** (highest impact)
-2. Fix `HUDPanel` to use proper full-rect anchoring
-3. Move or duplicate `WorldEnvironment` to the `InGame` scene root
-4. Add explicit `make_current()` safety and environment configuration if needed
-5. Verify rendering after the above changes
-
-## Conclusion
-
-This is no longer a camera positioning issue. It is a **scene architecture problem**. Continuing to tweak the OrbitCamera without addressing the root node type and environment setup will yield diminishing returns.
-
-The project has reached a point where a structural correction in `InGame.tscn` is required before further camera or rendering work will be effective.
+## References
+- [[Stellar Hegemony - Handoff Note - 2026-06-02]]
+- [[Stellar Hegemony - Phase 9 Task 1 - InGame Scene & HybridMap Integration]]
 
 ---
 
-*This assessment was performed after a full `git pull` and direct inspection of the live project files.*
+*This note was created after a full `git pull` and manual inspection of the live project files.*

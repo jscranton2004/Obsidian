@@ -28,9 +28,8 @@ The current implementation has correct positions, shape, and connections but is 
 ## Goal
 Scale up the zone layout on the HybridMap by pushing all zones farther away from a central point. The result must look like the spread-out reference image while keeping the exact same overall shape and connections as the current clustered implementation.
 
-## Attached Images (for visual reference)
-- Image 1 (current game): The clustered zone layout currently in the project (correct shape but too tight).
-- Image 2 (reference): The desired spread-out map layout with zones farther apart.
+## Reference Image (local file in repo)
+- `game/assets/reference/Wide_map.jpg` — the canonical spread-out reference layout (use this as the visual target for the final spacing). The current clustered positions live in `game/scripts/map/hybrid_map.gd` (SECTOR_DATA array).
 
 ## Scope (Narrow — do ONLY this)
 - Locate where the 11 zone positions are currently defined (likely in HybridMap.tscn, a Zone placement script, or an array of positions).

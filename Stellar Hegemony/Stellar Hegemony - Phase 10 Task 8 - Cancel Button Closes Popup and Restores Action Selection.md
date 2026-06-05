@@ -1,6 +1,6 @@
 # Stellar Hegemony - Phase 10 Task 8: Cancel Button Closes Popup and Restores Action Selection
 
-**Status:** Ready to start  
+**Status:** Complete (2026-06-05)  
 **Related:** [[Stellar Hegemony - Handoff Note - 2026-06-04.md]] [[Stellar Hegemony - Deployment Phase Card & Leader UI Plan]]
 
 ## Goal

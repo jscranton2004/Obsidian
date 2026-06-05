@@ -2,7 +2,7 @@
 
 **Written for:** Morgal  
 **Date:** 2026-06-05  
-**Status:** Phase 10 Tasks 7–9 complete
+**Status:** Phase 10 Tasks 7–10 complete
 
 ## Current Focus
 **Phase 10: Deployment Phase Card & Leader UI** — popup polish and action validation (Tasks 7–9).
@@ -12,8 +12,9 @@
 - **Task 7:** `ActionDetailPopup` centered on the full game viewport (reparent to `CanvasLayer`).
 - **Task 8:** Cancel button closes popup and restores tactic/leader selection.
 - **Task 9:** Precondition checks + unavailable feedback before **Use This Action**.
+- **Task 10:** Popup screen fitting — top margin, fully visible, no full-screen backdrop.
 
-See: [[Stellar Hegemony - Phase 10 Tasks 7-9 Session Completion]]
+See: [[Stellar Hegemony - Phase 10 Tasks 7-9 Session Completion]], [[Stellar Hegemony - Phase 10 Task 10 Completion]]
 
 ## Phase 10 Overall Status
 

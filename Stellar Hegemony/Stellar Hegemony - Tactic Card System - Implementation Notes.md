@@ -10,7 +10,7 @@
   - New `TacticManager` class (consistent with `LeaderSelection` and `DeploymentManager`)
 
 ### Key Features Implemented
-- `create_shared_pool(num_players)` — randomly selects exactly `(players + 1)` cards from the 12 into a shared pool
+- `create_shared_pool(num_players)` — randomly selects exactly **4** cards from the 12 into a shared pool (2–4 players)
 - `get_available_cards()` / `get_pool_ids()` — returns current shared pool
 - `can_player_select_card(player_id, card_id, is_eligible)` — enforces:
   - Pool membership
@@ -19,13 +19,46 @@
   - "Can perform the action" requirement (via `is_eligible` boolean passed by caller)
 - `player_use_card(...)` — removes the card from the shared pool permanently and marks the player as having used their one card
 - `lock_pool_for_exhaustion()` + `is_pool_locked()` — implements the global lockout rule
-- Full 12-card definitions (id + name + description) for future reference/UI
+- Full 12-card definitions (id + name + description) in `TacticManager.ALL_TACTIC_CARDS` — see **Card Rules** below
+- `get_card_definition(card_id)` (Phase 10 Task 11) — pool-independent lookup for UI popup text
 - Excellent comments referencing the planning docs
 
 ### Supporting File
 - `game/scripts/systems/tactic_manager_test.gd` — self-contained test script that verifies every acceptance criterion (pool sizes for 2/3/4 players, 1-per-player limit, removal from shared pool, eligibility gating, and global lockout)
 
 No other files were modified.
+
+## Card Rules (Canonical)
+
+**Source of truth in code:** `game/scripts/systems/tactic_manager.gd` → `ALL_TACTIC_CARDS`  
+**Design reference:** [[Stellar Hegemony - Adapted Tactic Cards]]  
+**UI lookup (popup descriptions):** `TacticManager.get_card_definition(card_id)` — always reads from `ALL_TACTIC_CARDS`, not the runtime pool.
+
+**Important rule (adjacency):**
+- “Adjacent” = hyperspace lanes **or** wormholes
+- Cards specifying “via hyperspace lanes” or “via wormhole” are restricted to that route only
+
+### Movement Cards
+
+| ID | Name | Rules Text |
+|----|------|------------|
+| `scout` | Scout | Move 1 of your FLEETS to an adjacent system. |
+| `hyperspace_invasion` | Hyperspace Invasion | Move 2 of your FLEETS from 1 system to an adjacent system via hyperspace lanes. |
+| `wormhole_invasion` | Wormhole Invasion | Move 2 of your FLEETS from 1 system to an adjacent system via wormhole. |
+| `sub_light_squadron` | Sub-Light Squadron | Move ½ of your FLEETS (rounded down) from 1 system to an adjacent system. |
+| `shadow_fleet` | Shadow Fleet | Move 1 of your FLEETS to any system where you already have FLEETS. |
+| `converge_on_the_core` | Converge on the Core | Move any number of your FLEETS to the Core System from systems adjacent to it. |
+
+### Support & Disruption Cards
+
+| ID | Name | Rules Text |
+|----|------|------------|
+| `reinforce` | Reinforce | Deploy 1 FLEET from your reserves into any system where you already have FLEETS. |
+| `insurrection` | Insurrection | Return 1 enemy FLEET to its reserves and replace it with a FLEET from your reserves. |
+| `expel` | Expel | Move 1 enemy FLEET from a system where you have FLEETS to an adjacent system. |
+| `seize` | Seize | Move 1 enemy FLEET from any system to an adjacent system where you have FLEETS. |
+| `false_flag` | False Flag | Move 1 of your FLEETS along with 2 enemy FLEETS to an adjacent system. |
+| `emergency_withdrawal` | Emergency Withdrawal | Return 2 of your FLEETS from any system(s) to your reserves. |
 
 ## How to Test
 

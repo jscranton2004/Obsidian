@@ -9,7 +9,7 @@ Ensure every tactic card displays its actual rules/description text in `ActionDe
 Descriptions were looked up only in `TacticManager.get_available_cards()` (the current runtime pool). The pool was created twice — once in `in_game._setup_managers()` and again in `DeploymentPhaseManager.start_deployment_phase()` — so tactic buttons could show cards from the first shuffle while the popup searched the second shuffle. Cards present in both pools (e.g. Reinforce) worked; others showed the placeholder.
 
 ## Changes
-- `tactic_manager.gd` — added `get_card_definition(card_id)` static lookup against `ALL_TACTIC_CARDS`.
+- `tactic_manager.gd` — added `get_card_definition(card_id)` static lookup against `ALL_TACTIC_CARDS` (canonical rules in [[Stellar Hegemony - Tactic Card System - Implementation Notes#Card Rules (Canonical)]]).
 - `deployment_dice_ui.gd` — popup uses canonical definition for title + description; removed `"Tactic card details."` fallback when data exists.
 - `in_game.gd` — pool created only in `start_deployment_phase`; refresh tactic buttons after phase start.
 

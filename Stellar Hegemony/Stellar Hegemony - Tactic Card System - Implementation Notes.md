@@ -10,7 +10,7 @@
   - New `TacticManager` class (consistent with `LeaderSelection` and `DeploymentManager`)
 
 ### Key Features Implemented
-- `create_shared_pool(num_players)` — randomly selects exactly **4** cards from the 12 into a shared pool (2–4 players)
+- `create_shared_pool(num_players)` — randomly selects exactly **(num_players + 1)** cards from the 12 into a shared pool (2→3, 3→4, 4→5)
 - `get_available_cards()` / `get_pool_ids()` — returns current shared pool
 - `can_player_select_card(player_id, card_id, is_eligible)` — enforces:
   - Pool membership
@@ -70,8 +70,8 @@ No other files were modified.
 **Manual / live testing in editor or console:**
 ```gdscript
 var tm := TacticManager.new()
-tm.create_shared_pool(3)          # 4 cards in pool
-print(tm.get_pool_ids())          # should have 4 random ids
+tm.create_shared_pool(3)          # 4 cards in pool (3 players + 1)
+print(tm.get_pool_ids())          # should have (players + 1) random ids
 
 # p1 uses one (eligible)
 tm.player_use_card("p1", tm.get_pool_ids()[0], true)

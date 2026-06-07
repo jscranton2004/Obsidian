@@ -7,21 +7,25 @@
 
 ## Prompt for Grok Build
 
-Wire the point values and visual tokens into the existing HybridMap system.
+Attach the visual point tokens to the existing zones on the HybridMap, using the values assigned during game initialization.
 
 **Requirements:**
 
-- Modify the HybridMap initialization flow so that when zones are created, they receive their point values (from Task C).
-- Instantiate and position both Large and Small tokens on each zone using the visuals from Task D.
-- Ensure the tokens are correctly parented and visible when the InGame scene loads.
-- Make sure zone data (including points) remains accessible from the map layer.
+- The HybridMap already contains exactly 11 zones. Do **not** create, remove, or modify any zones.
+- For each of the 11 existing zones:
+  - Attach the **Large token** displaying the **Primary Point** value that was randomly assigned to that zone in Task C.
+  - Attach the **Small token** displaying the **Secondary Point** value, which must be calculated from the zone’s Primary Point value using the function from Task B.
+- The tokens must reflect the actual values that were assigned during `GameSession` creation.
+- The map layout, zone count, and zone connectivity must remain completely unchanged.
 
 **Success Criteria:**
-- When a game starts, all 11 zones display both their Large and Small point tokens.
-- Tokens show the correct values.
-- Existing HybridMap functionality is not broken.
+- All 11 existing zones correctly display both their Large (Primary) and Small (Secondary) point tokens.
+- Primary tokens show the randomly assigned unique values from the array `[2..12]`.
+- Secondary tokens correctly show the calculated values (`round(Primary / 2)`).
+- No changes are made to the number or structure of zones.
+- Existing HybridMap functionality continues to work without modification.
 
-**Scope:** Integration only — do not change the core data model or calculation logic.
+**Scope:** Very narrow — only the attachment of tokens to the current zones using the values from Task C. Do not alter map structure.
 
 ---
 
